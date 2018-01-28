@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'df_user',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,6 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'utils工具.middleware.UrlPathRecordMiddleware'
 )
 
 ROOT_URLCONF = 'dailifresh.urls'
@@ -114,3 +116,23 @@ SESSION_REDIS_PORT = 6379
 SESSION_REDIS_DB = 2
 SESSION_REDIS_PASSWORD = ''
 SESSION_REDIS_PREFIX = 'session'
+
+# 发送邮件的类
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# 邮件服务器域名
+EMAIL_HOST = 'smtp.163.com'
+# 邮件服务器地址
+EMAIL_PORT = 25
+# 发送邮件的邮箱 ，根据情况修改
+EMAIL_HOST_USER = '17671677833@163.com'
+# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'qq717019142'
+# 收件人看到的发件人，前面的是名字 ， 注意<> 中的邮箱地址必须和EMAIL_HOST_USER一致
+EMAIL_FROM = 'xuzhao<17671677833@163.com>'
+
+import djcelery
+#去每一个注册的应用下面找一个taskpy的文件,到文件中加载celery函数
+djcelery.setup_loader()
+
+# 这里我们使用redis来充当BROKER
+BROKER_URL = 'redis://127.0.0.1:6379/3'

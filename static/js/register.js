@@ -8,6 +8,7 @@ $(function(){
 
 
 	$('#user_name').blur(function() {
+		console.log('用户名检测')
         check_user_name()
 	});
 
